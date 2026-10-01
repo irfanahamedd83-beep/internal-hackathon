@@ -1,0 +1,36 @@
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+backend/.venv/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Local Junctions / Symlinks
+fastapi
+pydantic
+sqlalchemy
+starlette
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# System Files
+.DS_Store
+Thumbs.db

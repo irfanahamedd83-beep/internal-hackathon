@@ -1,0 +1,16 @@
+{
+  "venvPath": "c:/Users/ELCOT/Desktop/internal hackathon",
+  "venv": ".venv",
+  "extraPaths": [
+    "c:/Users/ELCOT/Desktop/internal hackathon",
+    "c:/Users/ELCOT/Desktop/internal hackathon/backend",
+    "c:/Users/ELCOT/Desktop/internal hackathon/.venv/Lib/site-packages",
+    "./.venv/Lib/site-packages",
+    "./backend",
+    "."
+  ],
+  "reportMissingImports": "none",
+  "reportMissingModuleSource": "none",
+  "pythonVersion": "3.12",
+  "pythonPlatform": "Windows"
+}

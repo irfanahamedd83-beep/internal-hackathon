@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CareerVista Career & Hackathon Platform featuring glassmorphic UI, JWT auth, dynamic scoring engine, AI resume checker, and personalized roadmap generator.">
+  <title>CareerVista | Career & Hackathon Platform</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Dynamic Background -->
+  <div class="ambient-background" id="ambientBg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div class="mesh-grid"></div>
+  </div>
+
+  <!-- =========================================================================
+       UNIVERSAL TOP MENU BAR (1-Click Access to All Functions & Views)
+       ========================================================================= -->
+  <header class="universal-menubar" id="universalMenuBar">
+    <div class="menubar-container">
+      <!-- Brand & Route Badge (Image Removed as Requested) -->
+      <div class="menubar-brand" id="brandHomeBtn" role="button" tabindex="0" title="CareerVista Portal Home">
+        <span class="brand-name">CAREER<span>VISTA</span></span>
+        <span class="current-view-badge" id="currentViewBadge">Login</span>
+      </div>
+
+      <!-- Center Primary Navigation Bar (1-Click View Switchers) -->
+      <nav class="menubar-nav" aria-label="Main Navigation">
+        <button type="button" class="nav-item active" id="menuBtnLogin" data-view="login" title="1-Click Login & Registration">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>Login / Auth</span>
+        </button>
+
+        <button type="button" class="nav-item" id="menuBtnProfile" data-view="profile" title="1-Click User Profile & Workspace">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Profile</span>
+        </button>
+
+        <button type="button" class="nav-item" id="menuBtnAssessment" data-view="assessment" title="1-Click Skills & Career Assessment">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>Assessment</span>
+        </button>
+
+        <button type="button" class="nav-item" id="menuBtnRoadmap" data-view="roadmap" title="1-Click Career Progression Roadmap">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+            <line x1="9" y1="3" x2="9" y2="18"/>
+            <line x1="15" y1="6" x2="15" y2="21"/>
+          </svg>
+          <span>Roadmap</span>
+        </button>
+
+        <button type="button" class="nav-item" id="menuBtnResume" data-view="resume" title="1-Click Developer Resume Builder">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>Resume &amp; Checker</span>
+        </button>
+
+        <!-- "All Features" Dropdown Trigger (Contains Every Feature in Single Click) -->
+        <div class="features-dropdown-wrapper">
+          <button type="button" class="nav-item dropdown-toggle" id="featuresDropdownBtn" aria-expanded="false" title="Click to view all features">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span>All Features ▾</span>
+          </button>
+
+          <!-- Dropdown Menu of All Functions -->
+          <div class="features-menu" id="featuresMenu">
+            <div class="features-group-header">Resume &amp; Career Tools</div>
+            <button type="button" class="feature-item" id="featResumeBuilder">
+              <span class="feat-icon">📄</span>
+              <div class="feat-text"><strong>Resume Builder</strong><span>Build ATS resume from education</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featResumeChecker">
+              <span class="feat-icon">🔍</span>
+              <div class="feat-text"><strong>Resume Checker &amp; Optimizer</strong><span>ATS score &amp; Gemini AI rewrites</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featViewCert">
+              <span class="feat-icon">🎓</span>
+              <div class="feat-text"><strong>Technical Certificate</strong><span>View &amp; print verified credential</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featGenerateGeminiQ">
+              <span class="feat-icon">✨</span>
+              <div class="feat-text"><strong>Gemini AI Questions</strong><span>Generate 10 fresh questions</span></div>
+            </button>
+
+            <div class="features-group-header">Authentication & Access</div>
+            <button type="button" class="feature-item" id="featSignIn">
+              <span class="feat-icon">🔑</span>
+              <div class="feat-text"><strong>Sign In Portal</strong><span>Switch to login form</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featSignUp">
+              <span class="feat-icon">✍️</span>
+              <div class="feat-text"><strong>Create Account</strong><span>Switch to registration form</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featDemoFill">
+              <span class="feat-icon">⚡</span>
+              <div class="feat-text"><strong>Auto-Fill Demo</strong><span>Pre-fill verified credentials</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featForgot">
+              <span class="feat-icon">🔒</span>
+              <div class="feat-text"><strong>Reset Password</strong><span>Open password recovery dialog</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featTogglePass">
+              <span class="feat-icon">👁️</span>
+              <div class="feat-text"><strong>Inspect Passwords</strong><span>Toggle password visibility</span></div>
+            </button>
+
+            <div class="features-group-header">1-Click OAuth Logins</div>
+            <button type="button" class="feature-item" id="featGoogle">
+              <span class="feat-icon">🌐</span>
+              <div class="feat-text"><strong>Google Sign-In</strong><span>Direct OAuth session</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featGithub">
+              <span class="feat-icon">🐙</span>
+              <div class="feat-text"><strong>GitHub Sign-In</strong><span>Direct OAuth session</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featApple">
+              <span class="feat-icon">🍎</span>
+              <div class="feat-text"><strong>Apple Sign-In</strong><span>Direct OAuth session</span></div>
+            </button>
+
+            <div class="features-group-header">Profile & Workspace</div>
+            <button type="button" class="feature-item" id="featEditProfile">
+              <span class="feat-icon">✏️</span>
+              <div class="feat-text"><strong>Edit Profile & Skills</strong><span>Update education, skills & target role</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featSubmitProject">
+              <span class="feat-icon">🚀</span>
+              <div class="feat-text"><strong>Submit Project</strong><span>Add new hackathon prototype</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featCopyToken">
+              <span class="feat-icon">📋</span>
+              <div class="feat-text"><strong>Copy API Token</strong><span>Copy developer authentication key</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featOpenAiTutor">
+              <span class="feat-icon">🤖</span>
+              <div class="feat-text"><strong>AI Tutor &amp; Voice Chat</strong><span>Talk with Gemini Career Mentor</span></div>
+            </button>
+
+            <div class="features-group-header">Engine & Diagnostics</div>
+            <button type="button" class="feature-item" id="featRunAssessment">
+              <span class="feat-icon">🧪</span>
+              <div class="feat-text"><strong>Run Scoring Engine</strong><span>Evaluate skills & career matches</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featRegenRoadmap">
+              <span class="feat-icon">🧭</span>
+              <div class="feat-text"><strong>Regenerate Roadmap</strong><span>Build custom progression steps</span></div>
+            </button>
+            <button type="button" class="feature-item" id="featToggleGlow">
+              <span class="feat-icon">🎨</span>
+              <div class="feat-text"><strong>Toggle Ambient Glow</strong><span>Switch background light orbs</span></div>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Right Action Utilities -->
+      <div class="menubar-actions">
+        <!-- Notification Dropdown Button -->
+        <div class="notif-wrapper">
+          <button type="button" class="action-icon-btn" id="menuNotifBtn" title="Notifications">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notif-badge" id="notifBadge">3</span>
+          </button>
+
+          <!-- Notifications Popover -->
+          <div class="notif-dropdown hidden" id="notifDropdown">
+            <div class="notif-header">
+              <span>Notifications</span>
+              <button type="button" class="mark-read-btn" id="markAllReadBtn">Clear</button>
+            </div>
+            <div class="notif-list">
+              <div class="notif-item unread">
+                <span class="notif-dot"></span>
+                <div>
+                  <p class="notif-msg"><strong>Scoring Engine:</strong> Assessment passed with 96% AI Systems compatibility!</p>
+                  <span class="notif-time">Just now</span>
+                </div>
+              </div>
+              <div class="notif-item unread">
+                <span class="notif-dot"></span>
+                <div>
+                  <p class="notif-msg"><strong>Roadmap Update:</strong> Step 2 "Distributed LLM Agents" in progress.</p>
+                  <span class="notif-time">10m ago</span>
+                </div>
+              </div>
+              <div class="notif-item">
+                <span class="notif-dot"></span>
+                <div>
+                  <p class="notif-msg"><strong>Squad:</strong> Sarah Kim merged pull request into prototype branch.</p>
+                  <span class="notif-time">1h ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Identity Chip -->
+        <div class="user-chip" id="menuUserChip" role="button" tabindex="0" title="Go to Profile">
+          <div class="chip-avatar" id="menuAvatarInitials">AM</div>
+          <span class="chip-name" id="menuProfileName">Alex Morgan</span>
+        </div>
+
+        <!-- 1-Click Logout Button -->
+        <button type="button" class="menu-logout-btn" id="menuLogoutBtn" title="Sign Out">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span class="btn-label">Logout</span>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer for small screens -->
+    <div class="mobile-nav-drawer hidden" id="mobileNavDrawer">
+      <button type="button" class="mobile-nav-btn active" data-view="login">🔐 Login / Auth</button>
+      <button type="button" class="mobile-nav-btn" data-view="profile">👤 Profile</button>
+      <button type="button" class="mobile-nav-btn" data-view="assessment">📝 Assessment</button>
+      <button type="button" class="mobile-nav-btn" data-view="roadmap">🗺️ Roadmap</button>
+      <div class="mobile-divider"></div>
+      <button type="button" class="mobile-action-btn" id="mobileDemoFill">⚡ Auto-Fill Demo</button>
+      <button type="button" class="mobile-action-btn" id="mobileEditProfile">✏️ Edit Profile</button>
+      <button type="button" class="mobile-action-btn" id="mobileSubmitProject">🚀 Submit Project</button>
+      <button type="button" class="mobile-action-btn" id="mobileLogout">🚪 Logout</button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VIEW 1: LOGIN & REGISTRATION VIEW
+       ========================================================================= -->
+  <main class="page-container view-section" id="loginView">
+    <div class="auth-card" id="authCard">
+      <!-- Glow border overlay -->
+      <div class="card-glow" id="cardGlow"></div>
+
+      <!-- Header Section -->
+      <header class="auth-header">
+        <div class="brand-badge">
+          <span class="brand-name">CAREER<span>VISTA</span></span>
+        </div>
+        <h1 class="auth-title" id="authTitle">Welcome back</h1>
+        <p class="auth-subtitle" id="authSubtitle">Enter your credentials to access the hackathon portal</p>
+      </header>
+
+      <!-- Navigation Tabs (Sign In / Register) -->
+      <nav class="auth-tabs" role="tablist" aria-label="Authentication Options">
+        <button type="button" class="tab-btn active" id="tabSignIn" role="tab" aria-selected="true" aria-controls="signInForm">
+          Sign In
+        </button>
+        <button type="button" class="tab-btn" id="tabSignUp" role="tab" aria-selected="false" aria-controls="signUpForm">
+          Create Account
+        </button>
+        <div class="tab-indicator" id="tabIndicator"></div>
+      </nav>
+
+      <!-- Fast Demo Credentials Banner -->
+      <div class="demo-banner">
+        <span>💡 Demo Mode:</span>
+        <button type="button" class="demo-chip" id="demoAutoFillBtn">
+          Use Demo Credentials
+        </button>
+      </div>
+
+      <!-- Forms Container -->
+      <div class="forms-wrapper">
+        <!-- SIGN IN FORM -->
+        <form class="auth-form active" id="signInForm" autocomplete="on" novalidate>
+          <div class="input-group">
+            <label for="signinEmail">Email Address</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input type="email" id="signinEmail" name="email" placeholder="alex@careervista.dev" required autocomplete="email">
+            </div>
+            <span class="field-error" id="signinEmailError"></span>
+          </div>
+
+          <div class="input-group">
+            <div class="label-row">
+              <label for="signinPassword">Password</label>
+              <a href="#" class="forgot-link" id="openForgotModal">Forgot password?</a>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" id="signinPassword" name="password" placeholder="••••••••••••" required autocomplete="current-password">
+              <button type="button" class="password-toggle" data-target="signinPassword" aria-label="Toggle password visibility">
+                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="signinPasswordError"></span>
+          </div>
+
+          <div class="options-row">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="rememberMe" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-text">Keep me logged in for 30 days</span>
+            </label>
+          </div>
+
+          <!-- Account Not Found Notice (Shown when email is not registered) -->
+          <div class="auth-notice-card hidden" id="noAccountNotice">
+            <div class="notice-icon">⚠️</div>
+            <div class="notice-body">
+              <strong class="notice-title">Account Not Found</strong>
+              <p class="notice-desc" id="noAccountNoticeMsg">No registered account exists for this email address. Please create an account to get started.</p>
+            </div>
+            <button type="button" class="notice-action-btn" id="switchToSignUpBtn">Create Account →</button>
+          </div>
+
+          <button type="submit" class="submit-btn" id="signinSubmitBtn">
+            <span class="btn-text">Sign In to Dashboard</span>
+            <span class="btn-spinner hidden"></span>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </button>
+        </form>
+
+        <!-- SIGN UP FORM -->
+        <form class="auth-form hidden" id="signUpForm" autocomplete="off" novalidate>
+          <div class="input-group">
+            <label for="signupName">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <input type="text" id="signupName" name="name" placeholder="Alex Morgan" required>
+            </div>
+            <span class="field-error" id="signupNameError"></span>
+          </div>
+
+          <div class="input-group">
+            <label for="signupEmail">Work / Developer Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input type="email" id="signupEmail" name="email" placeholder="alex@hackathon.io" required>
+            </div>
+            <span class="field-error" id="signupEmailError"></span>
+          </div>
+
+          <div class="input-group">
+            <label for="signupPassword">Password</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" id="signupPassword" name="password" placeholder="Create robust password" required>
+              <button type="button" class="password-toggle" data-target="signupPassword" aria-label="Toggle password visibility">
+                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Dynamic Password Strength Bar -->
+            <div class="password-meter-container">
+              <div class="password-meter" id="passwordMeter">
+                <div class="meter-bar"></div>
+                <div class="meter-bar"></div>
+                <div class="meter-bar"></div>
+                <div class="meter-bar"></div>
+              </div>
+              <span class="meter-text" id="meterText">Password strength</span>
+            </div>
+            <span class="field-error" id="signupPasswordError"></span>
+          </div>
+
+          <!-- Ask Interested Domain on Account Creation -->
+          <div class="input-group">
+            <div class="label-row">
+              <label for="signupDomain">Choose Your Interested Domain Track</label>
+              <span class="sub-hint">Required for tailored articles & assessment</span>
+            </div>
+            <div class="input-wrapper select-wrapper">
+              <span class="input-icon">🎯</span>
+              <select id="signupDomain" name="interested_domain" class="auth-select" required>
+                <option value="ai-agents" selected>🤖 AI &amp; Autonomous Agents</option>
+                <option value="cloud-devops">☁️ Cloud &amp; DevOps Engineering</option>
+                <option value="fullstack">💻 Full-Stack Web &amp; Distributed Systems</option>
+                <option value="cybersec">🛡️ Cybersecurity &amp; ZK Cryptography</option>
+                <option value="data-eng">📊 Data Engineering &amp; Streaming</option>
+                <option value="custom-quantum-computing">⚛️ Quantum Computing</option>
+                <option value="custom-robotics-autonomous-systems">🤖 Robotics &amp; Autonomous Systems</option>
+                <option value="custom-game-engine-architecture">🎮 Game Engine Architecture</option>
+                <option value="other">➕ Custom / Other Domain (Type below)</option>
+              </select>
+            </div>
+            <!-- Sub-input for custom domain when 'other' is selected -->
+            <div class="input-wrapper custom-domain-subwrap hidden" id="signupCustomDomainWrap" style="margin-top: 0.6rem;">
+              <span class="input-icon">✨</span>
+              <input type="text" id="signupCustomDomain" placeholder="Type your custom interested domain (e.g. Bioinformatics, Embedded IoT)..." />
+            </div>
+            <span class="field-error" id="signupDomainError"></span>
+          </div>
+
+          <div class="options-row terms-row">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="termsAgree" required>
+              <span class="checkmark"></span>
+              <span class="checkbox-text">I agree to the <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a></span>
+            </label>
+            <span class="field-error" id="signupTermsError"></span>
+          </div>
+
+          <button type="submit" class="submit-btn" id="signupSubmitBtn">
+            <span class="btn-text">Create Free Account</span>
+            <span class="btn-spinner hidden"></span>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Social Authentication Divider -->
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <!-- Social Auth Buttons -->
+      <div class="social-auth-grid">
+        <button type="button" class="social-btn" id="googleAuthBtn" aria-label="Sign in with Google">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+            <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.8s.2-2.1.4-2.8L1.9 6.3C.7 8.7 0 10.3 0 12s.7 3.3 1.9 5.7l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.3-6.4-5.2L1.9 16C3.7 19.7 7.5 23 12 23z"/>
+          </svg>
+          <span>Google</span>
+        </button>
+
+        <button type="button" class="social-btn" id="githubAuthBtn" aria-label="Sign in with GitHub">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span>GitHub</span>
+        </button>
+
+        <button type="button" class="social-btn" id="appleAuthBtn" aria-label="Sign in with Apple">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.67-.82 1.13-1.96.99-3.1-.98.04-2.16.66-2.85 1.48-.61.71-1.15 1.87-.99 2.98 1.09.09 2.2-.56 2.85-1.36z"/>
+          </svg>
+          <span>Apple</span>
+        </button>
+      </div>
+
+      <!-- Security Guarantee footer -->
+      <footer class="auth-card-footer">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span>End-to-end 256-bit encrypted authentication &amp; route guarded API</span>
+      </footer>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       VIEW 2: PROFILE & WORKSPACE VIEW
+       ========================================================================= -->
+  <section class="dashboard-wrapper view-section hidden" id="profileView">
+    <div class="dash-content">
+      <!-- Profile Hero Card -->
+      <div class="profile-hero-card">
+        <div class="profile-hero-banner">
+          <div class="banner-mesh"></div>
+        </div>
+        <div class="profile-hero-content">
+          <div class="profile-avatar-container">
+            <div class="profile-avatar-gradient" id="dashAvatar">
+              <span id="dashAvatarText">AM</span>
+            </div>
+            <div class="status-indicator online" title="Status: Online & Ready to Hack"></div>
+          </div>
+
+          <div class="profile-info-block">
+            <div class="profile-name-row">
+              <h2 class="profile-fullname" id="dashProfileName">Alex Morgan</h2>
+              <span class="profile-badge verified">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Verified Hacker
+              </span>
+              <span class="profile-badge tier">Leaderboard #4</span>
+            </div>
+            <p class="profile-handle" id="dashProfileEmail">alex.developer@hackathon.dev</p>
+            <p class="profile-bio" id="dashProfileBio">Full-Stack Architect &amp; AI Systems Builder • Competing in CareerVista Autonomous Agents Track</p>
+          </div>
+
+          <div class="profile-actions-row">
+            <button type="button" class="dash-btn outline" id="editProfileBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <span>Edit Profile</span>
+            </button>
+            <button type="button" class="dash-btn primary" id="newSubmissionBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Submit Project</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career Target & Education Row (Matches PostgreSQL profiles schema) -->
+      <div class="profile-schema-grid">
+        <div class="schema-card">
+          <div class="schema-card-header">
+            <span class="schema-label">Target Role</span>
+            <span class="schema-tag role-tag" id="profileTargetRole">AI Systems Architect</span>
+          </div>
+          <p class="schema-desc" id="profileRoleDesc">Designing high-throughput autonomous LLM multi-agent orchestrators and edge WASM cryptographic primitives.</p>
+        </div>
+
+        <div class="schema-card">
+          <div class="schema-card-header">
+            <span class="schema-label">Education</span>
+            <span class="schema-tag edu-tag" id="profileEducation">M.S. in Computer Science</span>
+          </div>
+          <p class="schema-desc" id="profileEduInstitution">Stanford University • Focus on Distributed Systems &amp; Cryptographic Architecture</p>
+        </div>
+      </div>
+
+      <!-- Skills & Interests Inventory (skills[], interests[]) -->
+      <div class="inventory-grid">
+        <div class="inventory-card">
+          <div class="inv-header">
+            <h3>Verified Skills (<span id="skillsCount">8</span>)</h3>
+            <button type="button" class="inv-add-btn" id="addSkillTrigger">+ Add</button>
+          </div>
+          <div class="tag-cloud" id="skillsTagCloud">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">PyTorch</span>
+            <span class="skill-pill">TypeScript</span>
+            <span class="skill-pill">React</span>
+            <span class="skill-pill">Next.js 15</span>
+            <span class="skill-pill">Docker</span>
+            <span class="skill-pill">PostgreSQL</span>
+            <span class="skill-pill">System Design</span>
+          </div>
+        </div>
+
+        <div class="inventory-card">
+          <div class="inv-header">
+            <h3>Interested Domains (<span id="interestsCount">5</span>)</h3>
+            <span class="sub-hint">Click any domain to study articles & take assessment</span>
+          </div>
+          <div class="tag-cloud" id="interestsTagCloud">
+            <button type="button" class="interest-pill active" data-domain="ai-agents">🤖 AI & Autonomous Agents</button>
+            <button type="button" class="interest-pill" data-domain="cloud-devops">☁️ Cloud & DevOps</button>
+            <button type="button" class="interest-pill" data-domain="fullstack">💻 Full-Stack Web</button>
+            <button type="button" class="interest-pill" data-domain="cybersec">🛡️ Cybersecurity & ZK</button>
+            <button type="button" class="interest-pill" data-domain="data-eng">📊 Data Engineering</button>
+            <button type="button" class="interest-pill other-interest-pill" id="profileOtherDomainPill" data-domain="other">➕ Other Interested Domain</button>
+          </div>
+          <div class="profile-domain-search-box">
+            <div class="profile-search-input-wrap">
+              <span class="prof-search-icon">🔍</span>
+              <input type="text" id="profileDomainSearchInput" class="profile-search-input" placeholder="Search or type custom domain (e.g. Robotics, Quantum, Game Engine)..." autocomplete="off" />
+              <button type="button" class="profile-search-btn" id="profileDomainSearchBtn" title="Search domain and generate track">
+                <span>✨ Search &amp; Explore</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Domain & Assessment Learning Cards (Removed Hackathon score, sprint velocity, and compute credits) -->
+      <div class="stats-grid learning-stats-grid">
+        <div class="stat-card domain-metric-card" id="profileDomainCard">
+          <div class="stat-header">
+            <span class="stat-label">Interested Domain</span>
+            <div class="stat-icon purple">
+              <span id="profileDomainIcon">🤖</span>
+            </div>
+          </div>
+          <div class="stat-value domain-name-val" id="profileDomainName">AI & Autonomous Agents</div>
+          <div class="stat-subtext">
+            <button type="button" class="inline-action-btn" id="goToDomainAssessmentBtn">Take Domain Assessment →</button>
+          </div>
+        </div>
+
+        <div class="stat-card" id="profileArticlesCard">
+          <div class="stat-header">
+            <span class="stat-label">Reference Study Articles</span>
+            <div class="stat-icon cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+          </div>
+          <div class="stat-value" id="profileArticlesCount">2 <small>Reference Guides</small></div>
+          <div class="stat-subtext">
+            <button type="button" class="inline-action-btn" id="readArticlesQuickBtn">Study Articles Now 📖</button>
+          </div>
+        </div>
+
+        <div class="stat-card" id="profileScoreCard">
+          <div class="stat-header">
+            <span class="stat-label">Assessment Proficiency</span>
+            <div class="stat-icon emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <div class="stat-value" id="profileLatestScore">96% <small>Proficient</small></div>
+          <div class="stat-subtext">
+            <button type="button" class="inline-action-btn" id="viewAssessmentResultsBtn">View Assessment Results</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two-Column Workspace Layout -->
+      <div class="dash-columns">
+        <!-- Left: Current Hackathon Projects -->
+        <div class="dash-panel">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">Active Submissions</h3>
+              <p class="panel-subtitle">Current prototypes and repositories in development</p>
+            </div>
+            <button type="button" class="btn-sm" id="viewAllProjectsBtn">View All</button>
+          </div>
+
+          <div class="projects-list" id="projectsList">
+            <div class="project-item">
+              <div class="project-info">
+                <div class="project-title-row">
+                  <h4 class="project-name">CareerVista AI Orchestrator</h4>
+                  <span class="status-pill in-progress">In Review</span>
+                </div>
+                <p class="project-desc">Autonomous multi-agent workflow runtime with low-latency LLM stream caching.</p>
+                <div class="project-tags">
+                  <span class="tag">TypeScript</span>
+                  <span class="tag">Next.js 15</span>
+                  <span class="tag">WebSockets</span>
+                </div>
+              </div>
+              <div class="project-progress-wrap">
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 88%;"></div></div>
+                <span class="progress-text">88% Complete</span>
+              </div>
+            </div>
+
+            <div class="project-item">
+              <div class="project-info">
+                <div class="project-title-row">
+                  <h4 class="project-name">Quantum Vault Auth</h4>
+                  <span class="status-pill completed">Completed</span>
+                </div>
+                <p class="project-desc">Zero-knowledge proof biometric identification protocol running on WebAssembly.</p>
+                <div class="project-tags">
+                  <span class="tag">Rust</span>
+                  <span class="tag">WASM</span>
+                  <span class="tag">Cryptography</span>
+                </div>
+              </div>
+              <div class="project-progress-wrap">
+                <div class="progress-bar-bg"><div class="progress-bar-fill completed" style="width: 100%;"></div></div>
+                <span class="progress-text">100% Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: AI Tutor & Career Mentor Chatbot + Developer Keys -->
+        <div class="dash-panel side-panel ai-tutor-panel" id="aiTutorPanel">
+          <!-- AI Tutor & Career Mentor Chatbot (Powered by Gemini AI) -->
+          <div class="ai-tutor-container" id="aiTutorContainer">
+            <div class="panel-header ai-tutor-header">
+              <div class="ai-tutor-title-wrap">
+                <div class="ai-avatar-badge" id="aiTutorAvatarBadge">
+                  <span class="ai-avatar-icon">🤖</span>
+                  <span class="ai-live-pulse" id="aiTutorLivePulse"></span>
+                </div>
+                <div>
+                  <h3 class="panel-title">AI Tutor &amp; Career Mentor</h3>
+                  <p class="panel-subtitle" id="aiTutorStatusSub">Powered by Gemini AI • Voice-Ready</p>
+                </div>
+              </div>
+              <div class="ai-header-actions">
+                <button type="button" class="ai-voice-toggle-btn active" id="aiVoiceToggleBtn" title="Toggle AI Voice Speech Output">
+                  <span class="voice-icon">🔊</span>
+                  <span class="voice-text">Voice: ON</span>
+                </button>
+                <button type="button" class="ai-stop-speech-btn hidden" id="aiStopSpeechBtn" title="Stop AI Voice">
+                  ⏹️ Stop
+                </button>
+                <button type="button" class="ai-icon-action-btn" id="aiClearChatBtn" title="Clear Chat History">
+                  🧹
+                </button>
+              </div>
+            </div>
+
+            <!-- Voice Speaking Indicator Banner (Active when AI speaks) -->
+            <div class="ai-speaking-banner hidden" id="aiSpeakingBanner">
+              <div class="sound-wave">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <span class="speaking-text">AI Tutor is speaking aloud...</span>
+              <button type="button" class="stop-speaking-chip" id="stopSpeakingChipBtn">Mute Voice</button>
+            </div>
+
+            <!-- Domain Context Bar & Quick Prompts -->
+            <div class="ai-tutor-context-bar">
+              <div class="context-top-line">
+                <span class="context-label">Domain:</span>
+                <span class="context-domain-tag" id="aiTutorDomainTag">🤖 AI &amp; Autonomous Agents</span>
+              </div>
+              <div class="context-prompt-chips">
+                <button type="button" class="context-prompt-chip" data-prompt="Explain key architectural concepts for this track">💡 Key Concepts</button>
+                <button type="button" class="context-prompt-chip" data-prompt="How should I prepare for the 10 assessment questions?">📝 Assessment Tips</button>
+                <button type="button" class="context-prompt-chip" data-prompt="Give me a 3-step learning plan for my roadmap">🗺️ Roadmap Plan</button>
+              </div>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div class="ai-chat-messages" id="aiChatMessages">
+              <!-- Welcome message from AI Tutor -->
+              <div class="chat-message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-bubble">
+                  <div class="message-sender-row">
+                    <strong class="sender-name">Gemini AI Tutor</strong>
+                    <span class="message-time">Just now</span>
+                    <button type="button" class="msg-speak-btn" title="Read Aloud" data-text="Ask me technical questions, get architecture breakdowns, or prepare for your certification. You can type below or tap the microphone to speak with me directly!">🔊</button>
+                  </div>
+                  <div class="message-content">
+                    <p>Ask me technical questions, get architecture breakdowns, or prepare for your certification. You can type below or <strong>tap the microphone 🎙️</strong> to speak with me directly!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="ai-typing-indicator hidden" id="aiTypingIndicator">
+              <div class="message-avatar">🤖</div>
+              <div class="typing-bubble">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-text">Gemini AI Tutor is thinking...</span>
+              </div>
+            </div>
+
+            <!-- Speech-to-Text Live Transcript Preview Banner -->
+            <div class="voice-listening-card hidden" id="voiceListeningCard">
+              <div class="mic-pulse-ring">
+                <span class="mic-icon-large">🎙️</span>
+              </div>
+              <div class="voice-listening-info">
+                <strong>Listening to your voice...</strong>
+                <p class="transcript-preview" id="voiceTranscriptPreview">Speak clearly into your microphone...</p>
+              </div>
+              <button type="button" class="stop-mic-btn" id="stopMicBtn">Done</button>
+            </div>
+
+            <!-- Chat Input Box & Voice Controls -->
+            <form class="ai-chat-input-form" id="aiChatInputForm">
+              <div class="chat-input-wrapper">
+                <textarea id="aiChatInput" class="ai-chat-input" placeholder="Ask your AI Tutor or tap 🎙️ to speak..." rows="1"></textarea>
+                
+                <div class="input-actions-group">
+                  <!-- Microphone Speech-to-Text Button -->
+                  <button type="button" class="mic-btn" id="aiMicBtn" title="Speak with Microphone (Voice to Text)">
+                    <svg class="mic-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                      <line x1="12" y1="19" x2="12" y2="23"></line>
+                      <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                  </button>
+
+                  <!-- Send Message Button -->
+                  <button type="submit" class="send-btn" id="aiSendBtn" title="Send Message">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="chat-input-hints">
+                <span>💡 Press <kbd>Enter</kbd> to send • <kbd>Shift + Enter</kbd> for line • Tap 🎙️ to talk</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 3: ASSESSMENT & SCORING ENGINE VIEW
+       ========================================================================= -->
+  <section class="dashboard-wrapper view-section hidden" id="assessmentView">
+    <div class="dash-content">
+      <div class="view-header-banner">
+        <div>
+          <h2 class="view-title">Skills &amp; Domain Career Assessment</h2>
+          <p class="view-subtitle">Select an interested domain to study reference articles and attend the technical assessment.</p>
+        </div>
+        <div class="domain-quick-actions">
+          <span class="active-domain-chip" id="assessmentDomainBadge">🤖 AI & Autonomous Agents</span>
+        </div>
+      </div>
+
+      <!-- Domain Selection Tabs -->
+      <div class="domain-selector-bar">
+        <div class="selector-header-row">
+          <span class="selector-title">Interested Domain:</span>
+          <span class="selector-sub-hint">Choose a platform track or search any custom domain powered by Gemini AI</span>
+        </div>
+        <div class="domain-pills-list" id="domainPillsList">
+          <button type="button" class="domain-pill active" data-domain="ai-agents">
+            <span class="dp-icon">🤖</span>
+            <span>AI & Autonomous Agents</span>
+          </button>
+          <button type="button" class="domain-pill" data-domain="cloud-devops">
+            <span class="dp-icon">☁️</span>
+            <span>Cloud & DevOps</span>
+          </button>
+          <button type="button" class="domain-pill" data-domain="fullstack">
+            <span class="dp-icon">💻</span>
+            <span>Full-Stack Web</span>
+          </button>
+          <button type="button" class="domain-pill" data-domain="cybersec">
+            <span class="dp-icon">🛡️</span>
+            <span>Cybersecurity & ZK</span>
+          </button>
+          <button type="button" class="domain-pill" data-domain="data-eng">
+            <span class="dp-icon">📊</span>
+            <span>Data Engineering</span>
+          </button>
+          <button type="button" class="domain-pill other-domain-pill" id="otherDomainPill" data-domain="other" title="Search or explore any custom domain">
+            <span class="dp-icon">➕</span>
+            <span>Other Interested Domain</span>
+          </button>
+        </div>
+
+        <!-- Custom Domain Search Box with Search Button & Popular AI Exploration Chips -->
+        <div class="domain-search-wrapper" id="domainSearchWrapper">
+          <div class="domain-search-bar">
+            <div class="search-input-container">
+              <span class="search-leading-icon">🔍</span>
+              <input type="text" id="domainSearchInput" class="domain-search-input" placeholder="Search or type custom domain (e.g. Quantum Computing, Robotics & ROS, Game Architecture, Bioinformatics)..." autocomplete="off" />
+              <button type="button" class="search-clear-btn hidden" id="domainSearchClearBtn" title="Clear">✕</button>
+            </div>
+            <button type="button" class="domain-search-btn" id="domainSearchBtn" title="Generate track, articles, 10 questions, and custom roadmap using Gemini AI">
+              <span class="search-btn-icon">✨</span>
+              <span class="search-btn-text">Search &amp; Generate Track</span>
+              <span class="search-btn-spinner hidden"></span>
+            </button>
+          </div>
+          <div class="domain-search-chips-row">
+            <span class="chips-label">Popular Custom Tracks:</span>
+            <button type="button" class="domain-chip-btn" data-query="Quantum Computing">⚛️ Quantum Computing</button>
+            <button type="button" class="domain-chip-btn" data-query="Robotics & Autonomous Systems">🤖 Robotics & ROS</button>
+            <button type="button" class="domain-chip-btn" data-query="Game Engine Architecture">🎮 Game Engine Architecture</button>
+            <button type="button" class="domain-chip-btn" data-query="Bioinformatics & Genomics">🧬 Bioinformatics</button>
+            <button type="button" class="domain-chip-btn" data-query="Embedded IoT & Edge AI">⚡ Embedded IoT & Edge AI</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Domain Hero Banner -->
+      <div class="active-domain-hero" id="activeDomainHero">
+        <div class="domain-hero-content">
+          <div class="domain-icon-large" id="activeDomainIcon">🤖</div>
+          <div class="domain-text-block">
+            <div class="domain-meta-label">Selected Track</div>
+            <h3 class="domain-hero-title" id="activeDomainTitle">AI & Autonomous Agents</h3>
+            <p class="domain-hero-desc" id="activeDomainDesc">Master autonomous multi-agent state machines, cyclical graphs, tool calling protocols, and high-throughput vector embedding retrieval.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 1: Study Reference Articles (2 Articles for Selected Domain) -->
+      <div class="assessment-workflow-card">
+        <div class="workflow-header">
+          <div class="step-indicator-pill">Step 1 • Study Preparation</div>
+          <h3 class="workflow-title">Reference Study Articles</h3>
+          <p class="workflow-desc">Study these 2 curated reference articles below before attending the assessment. Clicking "Study Article" opens the in-app reading guide.</p>
+        </div>
+
+        <div class="reference-articles-grid" id="referenceArticlesGrid">
+          <!-- Dynamically populated with 2 reference articles -->
+        </div>
+
+        <!-- Article Completion Confirmation Card -->
+        <div class="article-confirmation-box" id="articleConfirmationCard">
+          <div class="confirmation-icon-col">
+            <div class="conf-icon-badge">📖</div>
+          </div>
+          <div class="confirmation-body">
+            <div class="conf-header-row">
+              <span class="conf-step-tag">Mandatory Verification</span>
+              <h4 class="conf-title">Have you finished reading both reference articles?</h4>
+            </div>
+            <p class="conf-desc">To ensure accurate technical evaluation, confirm you have completed reading both reference study guides above before proceeding to the 10-question assessment.</p>
+            <label class="custom-checkbox confirmation-checkbox-label">
+              <input type="checkbox" id="confirmArticlesReadCheck">
+              <span class="checkmark"></span>
+              <span class="checkbox-text"><strong>Yes, I have finished studying both articles</strong> for <span id="confDomainName">this domain</span> and I am ready to attend the 10-question technical assessment.</span>
+            </label>
+          </div>
+          <div class="confirmation-action-col">
+            <button type="button" class="dash-btn primary" id="unlockAssessmentBtn" disabled>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+              <span>Unlock 10-Question Assessment</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Attend Domain Assessment -->
+      <div class="assessment-workflow-card" id="step2WorkflowCard">
+        <div class="workflow-header">
+          <div class="workflow-header-top">
+            <div class="step-indicator-pill">Step 2 • Technical Assessment</div>
+            <div class="assessment-action-pills">
+              <span class="q-progress-indicator" id="qProgressIndicator">10 Technical Questions • 75% to Earn Certificate</span>
+              <button type="button" class="dash-btn outline btn-xs" id="geminiRegenQBtn" title="Generate fresh 10 questions using Google Gemini in backend">
+                <span>✨ Generate with Gemini AI</span>
+              </button>
+            </div>
+          </div>
+          <h3 class="workflow-title">Attend Domain Assessment</h3>
+          <p class="workflow-desc">Select the optimal answer for each question based on the reference study guides. Score <strong>75% or higher</strong> to qualify and earn your official verified Technical Certificate.</p>
+        </div>
+
+        <!-- Assessment Locked Overlay Gate (shown until user confirms articles) -->
+        <div class="assessment-lock-gate" id="assessmentLockedGate">
+          <div class="lock-gate-card">
+            <div class="lock-gate-icon">🔒</div>
+            <h4 class="lock-gate-title">Assessment Locked</h4>
+            <p class="lock-gate-desc">Please study the 2 reference articles in Step 1 above and check the confirmation box: <em>"Yes, I have finished studying both articles"</em> to unlock your 10 technical questions.</p>
+            <button type="button" class="dash-btn outline" id="scrollToArticlesBtn">
+              <span>↑ Read Reference Articles First</span>
+            </button>
+          </div>
+        </div>
+
+        <form id="assessmentForm" class="assessment-form hidden">
+          <div id="domainQuestionsContainer" class="questions-container">
+            <!-- Dynamically populated 10 questions based on selected domain -->
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="submit-btn" id="submitAssessmentBtn">
+              <span class="btn-text">Submit Assessment &amp; Evaluate Answers (Score ≥ 75% to Earn Certificate)</span>
+              <span class="btn-spinner hidden"></span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Scoring & Results Output Panel -->
+        <div class="scoring-output-panel hidden" id="scoringOutputPanel">
+          <!-- Dynamically populated results, certificate banner, and improvement roadmap -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 4: ROADMAP & CAREER PROGRESSION VIEW
+       ========================================================================= -->
+  <section class="dashboard-wrapper view-section hidden" id="roadmapView">
+    <div class="dash-content">
+      <div class="view-header-banner">
+        <div>
+          <div class="roadmap-sub-badge">Target Role: <strong id="roadmapRoleBadge">AI Systems &amp; Autonomous Agents Architect</strong> <span class="active-domain-chip" id="roadmapDomainBadge" style="margin-left: 0.5rem;">🤖 AI &amp; Autonomous Agents</span></div>
+          <h2 class="view-title">Personalized Career Progression Roadmap</h2>
+          <p class="view-subtitle" id="roadmapSubtitle">Exclusive milestone progression for your selected domain track, generated by backend services based on technical gap analysis.</p>
+        </div>
+        <div class="roadmap-header-actions">
+          <button type="button" class="dash-btn outline" id="regenRoadmapBtn">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Regenerate Roadmap</span>
+          </button>
+          <button type="button" class="dash-btn primary" id="exportRoadmapBtn">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <span>Share &amp; Export</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Roadmap Progress Bar -->
+      <div class="roadmap-summary-card">
+        <div class="summary-top">
+          <span>Overall Progression</span>
+          <span class="summary-stat"><strong id="roadmapCompletedCount">1</strong> of <strong id="roadmapTotalCount">5</strong> Milestones Completed (<span id="roadmapPercent">20%</span>)</span>
+        </div>
+        <div class="summary-progress-bg">
+          <div class="summary-progress-fill" id="roadmapProgressFill" style="width: 20%;"></div>
+        </div>
+      </div>
+
+      <!-- Roadmap Timeline Steps (dynamically populated strictly for the selected domain) -->
+      <div class="roadmap-steps-list" id="roadmapStepsList">
+        <!-- Dynamically rendered for the active interested domain -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VIEW 5: RESUME BUILDER (Anchored in Educational Qualification)
+       ========================================================================= -->
+  <section class="dashboard-wrapper view-section hidden" id="resumeView">
+    <div class="dash-content">
+      <div class="view-header-banner">
+        <div>
+          <div class="roadmap-sub-badge">ATS-Optimized Career Tool</div>
+          <h2 class="view-title">Executive Developer Resume Builder</h2>
+          <p class="view-subtitle">Generates a high-impact, ATS-optimized professional resume anchored in your educational qualifications, verified assessment certificates, and project portfolio.</p>
+        </div>
+        <div class="resume-header-actions">
+          <button type="button" class="dash-btn outline" id="aiEnhanceResumeBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span>✨ Gemini AI Polish</span>
+          </button>
+          <button type="button" class="dash-btn outline" id="saveResumeBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Save to Profile</span>
+          </button>
+          <button type="button" class="dash-btn primary" id="printResumeBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>🖨️ Print / Download PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Segmented Tab Switcher: Resume Builder vs Resume Checker & ATS Optimizer -->
+      <div class="resume-suite-tabs" role="tablist">
+        <button type="button" class="suite-tab-btn active" id="tabResumeBuilder">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>Resume Builder</span>
+        </button>
+        <button type="button" class="suite-tab-btn" id="tabResumeChecker">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="m9 11 2 2 4-4"/></svg>
+          <span>Resume Checker &amp; ATS Optimizer</span>
+          <span class="spark-badge">Gemini AI</span>
+        </button>
+      </div>
+
+      <!-- Split Layout: Form on Left, Live A4 Resume Preview on Right -->
+      <div class="resume-builder-grid" id="resumeBuilderGrid">
+        <!-- LEFT: Educational Qualification & Profile Configuration Form -->
+        <div class="resume-config-pane">
+          <!-- Card 1: Educational Qualification Foundation -->
+          <div class="resume-card-section">
+            <div class="resume-sec-header">
+              <span class="resume-sec-icon">🎓</span>
+              <div>
+                <h4 class="resume-sec-title">Educational Qualification</h4>
+                <p class="resume-sec-sub">The core academic foundation for your executive resume.</p>
+              </div>
+            </div>
+
+            <div class="input-grid-2">
+              <div class="input-group">
+                <label for="resEduDegree">Degree &amp; Major</label>
+                <input type="text" id="resEduDegree" class="custom-input" value="M.S. in Computer Science & Distributed Systems" placeholder="e.g. B.Tech in Computer Science">
+              </div>
+              <div class="input-group">
+                <label for="resEduInstitution">University / Institution</label>
+                <input type="text" id="resEduInstitution" class="custom-input" value="Stanford University" placeholder="e.g. University Name">
+              </div>
+            </div>
+
+            <div class="input-grid-2">
+              <div class="input-group">
+                <label for="resEduGradYear">Graduation Year</label>
+                <input type="text" id="resEduGradYear" class="custom-input" value="2025" placeholder="e.g. 2025">
+              </div>
+              <div class="input-group">
+                <label for="resEduGpa">CGPA / Grade</label>
+                <input type="text" id="resEduGpa" class="custom-input" value="3.92 / 4.0 GPA" placeholder="e.g. 8.9 / 10 CGPA or 3.9 GPA">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="resEduCoursework">Key Relevant Coursework</label>
+              <input type="text" id="resEduCoursework" class="custom-input" value="Distributed Systems, Large Language Models, Database Internals, Cryptographic Protocols">
+            </div>
+
+            <div class="input-group">
+              <label for="resEduHonors">Academic Honors &amp; Thesis</label>
+              <textarea id="resEduHonors" class="custom-input" rows="2">Dean's Honor List • Graduate Research Fellow in Autonomous Agent State Graphs & RAG</textarea>
+            </div>
+          </div>
+
+          <!-- Card 2: Contact Information & Target Role -->
+          <div class="resume-card-section">
+            <div class="resume-sec-header">
+              <span class="resume-sec-icon">👤</span>
+              <div>
+                <h4 class="resume-sec-title">Candidate Details &amp; Target Role</h4>
+                <p class="resume-sec-sub">Personal identity and career track.</p>
+              </div>
+            </div>
+
+            <div class="input-grid-2">
+              <div class="input-group">
+                <label for="resFullName">Full Name</label>
+                <input type="text" id="resFullName" class="custom-input" value="Alex Morgan">
+              </div>
+              <div class="input-group">
+                <label for="resTargetRole">Target Career Role</label>
+                <input type="text" id="resTargetRole" class="custom-input" value="AI Systems Architect">
+              </div>
+            </div>
+
+            <div class="input-grid-2">
+              <div class="input-group">
+                <label for="resEmail">Email</label>
+                <input type="email" id="resEmail" class="custom-input" value="alex.developer@hackathon.dev">
+              </div>
+              <div class="input-group">
+                <label for="resPhone">Phone Number</label>
+                <input type="text" id="resPhone" class="custom-input" value="+1 (555) 438-9021">
+              </div>
+            </div>
+
+            <div class="input-grid-2">
+              <div class="input-group">
+                <label for="resLocation">Location</label>
+                <input type="text" id="resLocation" class="custom-input" value="San Francisco, CA / Remote">
+              </div>
+              <div class="input-group">
+                <label for="resPortfolio">GitHub / Portfolio URL</label>
+                <input type="text" id="resPortfolio" class="custom-input" value="github.com/alex-morgan-dev">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="resSummary">Executive Summary</label>
+              <textarea id="resSummary" class="custom-input" rows="3">High-impact engineer backed by advanced graduate training in Computer Science & Distributed Systems. Specializing in high-throughput autonomous agent runtimes, vector RAG retrieval, and resilient microservices.</textarea>
+            </div>
+          </div>
+
+          <!-- Card 3: Skills & Competencies -->
+          <div class="resume-card-section">
+            <div class="resume-sec-header">
+              <span class="resume-sec-icon">⚡</span>
+              <div>
+                <h4 class="resume-sec-title">Technical Skills &amp; Competencies</h4>
+                <p class="resume-sec-sub">Categorized competencies aligned with ATS parsers.</p>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="resSkillsLangs">Programming Languages</label>
+              <input type="text" id="resSkillsLangs" class="custom-input" value="Python 3.12, TypeScript, SQL, Rust, Go, C++">
+            </div>
+
+            <div class="input-group">
+              <label for="resSkillsFrameworks">Frameworks &amp; Runtimes</label>
+              <input type="text" id="resSkillsFrameworks" class="custom-input" value="React 19, Next.js 15, Node.js, PyTorch, LangGraph, FastAPI">
+            </div>
+
+            <div class="input-group">
+              <label for="resSkillsCloud">Cloud, DevOps &amp; Databases</label>
+              <input type="text" id="resSkillsCloud" class="custom-input" value="Docker, Kubernetes, AWS, Terraform, PostgreSQL, Redis, ClickHouse, Qdrant">
+            </div>
+          </div>
+
+          <!-- Card 4: Verified Platform Certifications -->
+          <div class="resume-card-section">
+            <div class="resume-sec-header">
+              <span class="resume-sec-icon">🏅</span>
+              <div>
+                <h4 class="resume-sec-title">Verified Certifications</h4>
+                <p class="resume-sec-sub">Platform assessment credentials automatically imported.</p>
+              </div>
+            </div>
+            <div class="res-certs-list" id="resCertsList">
+              <!-- Dynamically populated with earned certificates -->
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Live A4 Executive Resume Preview -->
+        <div class="resume-preview-pane">
+          <div class="resume-preview-toolbar">
+            <div class="ats-badge">
+              <span class="ats-circle" id="atsScoreValue">96%</span>
+              <div class="ats-info">
+                <strong>ATS Compatibility Score</strong>
+                <span>Optimized for Tech Recruiters &amp; Enterprise Parsers</span>
+              </div>
+            </div>
+            <button type="button" class="btn-sm" id="refreshResumePreviewBtn">
+              <span>↻ Refresh Preview</span>
+            </button>
+          </div>
+
+          <!-- Printable A4 Paper Container -->
+          <div class="a4-resume-wrapper">
+            <div class="a4-resume-paper" id="resumeA4Paper">
+              <!-- Resume Header -->
+              <header class="a4-header">
+                <h1 class="a4-name" id="previewName">Alex Morgan</h1>
+                <h2 class="a4-target-role" id="previewRole">AI Systems Architect</h2>
+                <div class="a4-contact-bar">
+                  <span id="previewEmail">alex.developer@hackathon.dev</span> •
+                  <span id="previewPhone">+1 (555) 438-9021</span> •
+                  <span id="previewLocation">San Francisco, CA</span> •
+                  <span id="previewPortfolio">github.com/alex-morgan-dev</span>
+                </div>
+              </header>
+
+              <!-- Executive Summary -->
+              <section class="a4-section">
+                <h3 class="a4-section-title">Professional Summary</h3>
+                <p class="a4-summary-text" id="previewSummary">High-impact engineer backed by advanced graduate training in Computer Science &amp; Distributed Systems from Stanford University. Specializing in high-throughput autonomous agent runtimes, vector RAG retrieval, and resilient microservices with verified domain credentials.</p>
+              </section>
+
+              <!-- Education Qualification (PROMINENTLY FEATURED) -->
+              <section class="a4-section">
+                <h3 class="a4-section-title">Education &amp; Academic Qualifications</h3>
+                <div class="a4-edu-block">
+                  <div class="a4-row-between">
+                    <div>
+                      <strong class="a4-institution" id="previewInstitution">Stanford University</strong>
+                      <div class="a4-degree" id="previewDegree">Master of Science in Computer Science &amp; Distributed Systems</div>
+                    </div>
+                    <div class="a4-right-meta">
+                      <span class="a4-year" id="previewGradYear">2025</span>
+                      <div class="a4-gpa" id="previewGpa">3.92 / 4.0 GPA</div>
+                    </div>
+                  </div>
+                  <div class="a4-coursework" id="previewCoursework">
+                    <strong>Key Coursework:</strong> Distributed Systems, Large Language Models, Database Internals, Cryptographic Protocols
+                  </div>
+                  <div class="a4-honors" id="previewHonors">
+                    • Dean's Honor List • Graduate Research Fellow in Autonomous Agent State Graphs &amp; RAG
+                  </div>
+                </div>
+              </section>
+
+              <!-- Technical Competencies -->
+              <section class="a4-section">
+                <h3 class="a4-section-title">Technical Competencies</h3>
+                <div class="a4-skills-table">
+                  <div class="a4-skill-row">
+                    <span class="a4-skill-label">Languages:</span>
+                    <span class="a4-skill-val" id="previewLangs">Python 3.12, TypeScript, SQL, Rust, Go, C++</span>
+                  </div>
+                  <div class="a4-skill-row">
+                    <span class="a4-skill-label">Frameworks &amp; Web:</span>
+                    <span class="a4-skill-val" id="previewFrameworks">React 19, Next.js 15, Node.js, PyTorch, LangGraph, FastAPI</span>
+                  </div>
+                  <div class="a4-skill-row">
+                    <span class="a4-skill-label">Cloud, DevOps &amp; DBs:</span>
+                    <span class="a4-skill-val" id="previewCloud">Docker, Kubernetes, AWS, Terraform, PostgreSQL, Redis, ClickHouse, Qdrant</span>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Key Projects & Architecture -->
+              <section class="a4-section">
+                <h3 class="a4-section-title">Selected Engineering Projects</h3>
+                <div class="a4-projects-list" id="previewProjectsList">
+                  <div class="a4-project-item">
+                    <div class="a4-row-between">
+                      <strong class="a4-proj-name">CareerVista AI Autonomous Orchestration Engine</strong>
+                      <span class="a4-proj-tech">TypeScript, Next.js 15, Python, LangGraph</span>
+                    </div>
+                    <ul class="a4-proj-bullets">
+                      <li>Designed an asynchronous multi-agent DAG runner reducing end-to-end task completion latency by 42%.</li>
+                      <li>Implemented append-only state checkpointing with SQLite enabling instant rollback and human-in-the-loop tool intervention.</li>
+                    </ul>
+                  </div>
+
+                  <div class="a4-project-item">
+                    <div class="a4-row-between">
+                      <strong class="a4-proj-name">Quantum Vault Zero-Knowledge Identity Gate</strong>
+                      <span class="a4-proj-tech">Rust, WebAssembly, zk-SNARKs, OAuth 2.1</span>
+                    </div>
+                    <ul class="a4-proj-bullets">
+                      <li>Built in-browser WASM cryptographic circuits allowing users to prove credential validity without revealing sensitive data.</li>
+                      <li>Secured edge API endpoints with asymmetric RS256 token verification and HttpOnly SameSite cookie guards.</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Verified Certifications & Assessments -->
+              <section class="a4-section">
+                <h3 class="a4-section-title">Verified Certifications &amp; Credentials</h3>
+                <div class="a4-certs-preview-list" id="previewCertsList">
+                  <div class="a4-cert-entry">
+                    <div class="a4-row-between">
+                      <strong class="a4-cert-title">Certified Specialist: AI &amp; Autonomous Agents</strong>
+                      <span class="a4-cert-score">90% Proficiency (Honor Roll)</span>
+                    </div>
+                    <div class="a4-cert-meta">
+                      Credential ID: <code>VRF-CV-90-A882</code> • Issued by CareerVista Technical Board
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESUME CHECKER & ATS OPTIMIZER (Gemini-Powered) -->
+      <div class="resume-checker-pane hidden" id="resumeCheckerPane">
+        <div class="checker-grid">
+          <!-- Left Column: Input Form & Upload Tools -->
+          <div class="checker-input-card">
+            <div class="checker-card-header">
+              <div class="checker-header-icon">🔍</div>
+              <div>
+                <h3 class="checker-card-title">Resume &amp; ATS Audit Input</h3>
+                <p class="checker-card-sub">Paste your resume or pull from your profile. Gemini AI will evaluate keyword match, impact quantification, and formatting against real ATS filters.</p>
+              </div>
+            </div>
+
+            <!-- Fast Action Toolbar -->
+            <div class="checker-toolbar">
+              <label class="checker-tool-btn" title="Upload a .txt, .pdf, or .docx file">
+                <input type="file" id="checkerFileInput" accept=".txt,.pdf,.docx,.doc,.md" style="display:none;">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>Upload Resume</span>
+              </label>
+              <button type="button" class="checker-tool-btn" id="checkerPullFromBuilderBtn" title="Import data from the Resume Builder">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Pull from Builder</span>
+              </button>
+              <button type="button" class="checker-tool-btn" id="checkerLoadSampleBtn" title="Load sample senior software engineer resume">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>Load Sample</span>
+              </button>
+              <button type="button" class="checker-tool-btn danger" id="checkerClearBtn" title="Clear inputs">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>Clear</span>
+              </button>
+            </div>
+
+            <!-- Target Role & Domain Selection -->
+            <div class="input-grid-2" style="margin-top: 14px;">
+              <div class="input-group">
+                <label for="checkerTargetRole">Target Job Title / Role</label>
+                <input type="text" id="checkerTargetRole" class="custom-input" placeholder="e.g. Senior Full Stack Engineer" value="Senior Full Stack Engineer">
+              </div>
+              <div class="input-group">
+                <label for="checkerDomainSelect">Target Technical Domain</label>
+                <div class="select-wrapper">
+                  <select id="checkerDomainSelect" class="custom-select">
+                    <option value="ai-agents">AI &amp; Autonomous Agents</option>
+                    <option value="cloud-devops">Cloud Native &amp; DevOps</option>
+                    <option value="fullstack" selected>Modern Full-Stack Development</option>
+                    <option value="cybersec">Cybersecurity &amp; Zero Trust</option>
+                    <option value="data-eng">Data Engineering &amp; ML Pipelines</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Description Optional -->
+            <div class="input-group" style="margin-top: 10px;">
+              <div class="label-row">
+                <label for="checkerJobDesc">Target Job Description (Optional for Exact Match)</label>
+                <span class="field-hint">Paste posting for tailored keyword matching</span>
+              </div>
+              <textarea id="checkerJobDesc" class="custom-textarea" rows="3" placeholder="Paste the job requirements or target JD here to compare against specific skills..."></textarea>
+            </div>
+
+            <!-- Resume Text Area -->
+            <div class="input-group" style="margin-top: 10px;">
+              <div class="label-row">
+                <label for="checkerResumeText">Resume Content</label>
+                <span class="field-hint" id="checkerWordCountHint">0 words</span>
+              </div>
+              <textarea id="checkerResumeText" class="custom-textarea" rows="14" placeholder="Paste your full resume text here (Contact, Summary, Education, Experience, Projects, Skills)..."></textarea>
+            </div>
+
+            <!-- Analyze Button -->
+            <button type="button" class="dash-btn primary checker-submit-btn" id="runResumeCheckBtn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>⚡ Analyze Resume &amp; Generate Gemini Improvements</span>
+            </button>
+          </div>
+
+          <!-- Right Column: Results & Interactive Improvement Dashboard -->
+          <div class="checker-results-card" id="checkerResultsCard">
+            <!-- Empty State -->
+            <div class="checker-empty-state" id="checkerEmptyState">
+              <div class="checker-empty-icon">📊</div>
+              <h3>AI-Powered Resume &amp; ATS Audit</h3>
+              <p>Get instant deep insights into how Applicant Tracking Systems (ATS) and hiring managers rank your resume:</p>
+              <div class="checker-perks-list">
+                <div class="checker-perk-item">
+                  <span class="perk-check">✓</span>
+                  <div>
+                    <strong>ATS Compatibility Score (0–100%)</strong>
+                    <span>Weighted evaluation across keyword coverage, action verbs, and structure.</span>
+                  </div>
+                </div>
+                <div class="checker-perk-item">
+                  <span class="perk-check">✓</span>
+                  <div>
+                    <strong>Domain Keyword Gap Analysis</strong>
+                    <span>Instant detection of missing industry keywords and high-priority tech stacks.</span>
+                  </div>
+                </div>
+                <div class="checker-perk-item">
+                  <span class="perk-check">✓</span>
+                  <div>
+                    <strong>Google XYZ Bullet Rewrites</strong>
+                    <span>Gemini rewrites weak experience bullets into quantified impact statements.</span>
+                  </div>
+                </div>
+                <div class="checker-perk-item">
+                  <span class="perk-check">✓</span>
+                  <div>
+                    <strong>1-Click Builder Sync</strong>
+                    <span>Directly apply improved bullets into your CareerVista resume.</span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="dash-btn outline" id="checkerTryDemoBtn" style="margin-top: 20px;">
+                <span>✨ Try with Sample Resume</span>
+              </button>
+            </div>
+
+            <!-- Loading State -->
+            <div class="checker-loading-state hidden" id="checkerLoadingState">
+              <div class="loading-ring-spinner"></div>
+              <h4>Analyzing Resume with Gemini AI...</h4>
+              <p class="loading-subtext">Evaluating ATS parsability, cross-referencing domain keywords, and drafting impact rewrites.</p>
+            </div>
+
+            <!-- Populated Results Container -->
+            <div class="checker-results-body hidden" id="checkerResultsBody">
+              <!-- Top Score Hero Banner -->
+              <div class="ats-hero-card">
+                <div class="ats-score-gauge-wrap">
+                  <div class="ats-gauge-circle">
+                    <svg viewBox="0 0 100 100" class="ats-gauge-svg">
+                      <circle class="gauge-bg" cx="50" cy="50" r="42" stroke-width="8"></circle>
+                      <circle class="gauge-progress" id="atsScoreCircle" cx="50" cy="50" r="42" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="66"></circle>
+                    </svg>
+                    <div class="ats-gauge-inner">
+                      <span class="ats-gauge-val" id="atsScoreValue">78%</span>
+                      <span class="ats-gauge-label">ATS Score</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ats-hero-info">
+                  <div class="ats-grade-row">
+                    <span class="ats-grade-badge" id="atsGradeBadge">Strong (A-)</span>
+                    <span class="ats-target-badge" id="atsTargetBadge">Senior Full Stack Engineer</span>
+                  </div>
+                  <h4 class="ats-hero-title" id="atsSummaryTitle">High ATS Match with Optimization Opportunities</h4>
+                  <p class="ats-hero-desc" id="atsSummaryDesc">Your resume has strong foundations in technical skills. Adding quantified business impact to experience bullets will push you into the top 5% applicant tier.</p>
+                </div>
+              </div>
+
+              <!-- 4-Pillar Breakdown Bars -->
+              <div class="score-breakdown-panel">
+                <h5 class="panel-micro-title">ATS SCORING PILLARS</h5>
+                <div class="breakdown-grid">
+                  <div class="breakdown-bar-item">
+                    <div class="breakdown-label-row">
+                      <span>Keyword Match</span>
+                      <strong id="barKeywordVal">82%</strong>
+                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="barKeywordFill" style="width: 82%;"></div></div>
+                  </div>
+                  <div class="breakdown-bar-item">
+                    <div class="breakdown-label-row">
+                      <span>Quantified Impact</span>
+                      <strong id="barImpactVal">65%</strong>
+                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="barImpactFill" style="width: 65%;"></div></div>
+                  </div>
+                  <div class="breakdown-bar-item">
+                    <div class="breakdown-label-row">
+                      <span>ATS Structure &amp; Format</span>
+                      <strong id="barFormatVal">88%</strong>
+                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="barFormatFill" style="width: 88%;"></div></div>
+                  </div>
+                  <div class="breakdown-bar-item">
+                    <div class="breakdown-label-row">
+                      <span>Action Verbs &amp; Clarity</span>
+                      <strong id="barVerbVal">75%</strong>
+                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="barVerbFill" style="width: 75%;"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Missing Domain Keywords Cloud -->
+              <div class="keywords-analysis-card">
+                <div class="kw-header-row">
+                  <div class="kw-title-wrap">
+                    <span class="kw-icon">⚠️</span>
+                    <div>
+                      <h4 class="card-section-title">Missing Target Keywords</h4>
+                      <p class="card-section-desc">Applicant Tracking Systems filter out candidates missing these high-frequency domain terms:</p>
+                    </div>
+                  </div>
+                  <span class="kw-count-badge" id="checkerMissingCount">4 Missing</span>
+                </div>
+                <div class="missing-keywords-list" id="checkerMissingKeywordsList">
+                  <!-- Dynamically populated tags -->
+                </div>
+              </div>
+
+              <!-- Strengths vs Areas to Improve -->
+              <div class="feedback-dual-grid">
+                <div class="feedback-col strengths-col">
+                  <div class="col-header">
+                    <span class="col-icon">✅</span>
+                    <strong>Key Strengths</strong>
+                  </div>
+                  <ul class="feedback-bullet-list" id="checkerStrengthsList">
+                    <!-- Populated dynamically -->
+                  </ul>
+                </div>
+
+                <div class="feedback-col weaknesses-col">
+                  <div class="col-header">
+                    <span class="col-icon">💡</span>
+                    <strong>Areas to Improve</strong>
+                  </div>
+                  <ul class="feedback-bullet-list" id="checkerWeaknessesList">
+                    <!-- Populated dynamically -->
+                  </ul>
+                </div>
+              </div>
+
+              <!-- What You Are Capable of Doing in the Industry (Industry Capabilities & Production Readiness) -->
+              <div class="industry-capabilities-card" id="checkerIndustryCapabilitiesCard">
+                <div class="ind-cap-header">
+                  <div class="ind-cap-icon-wrap">
+                    <span class="ind-cap-icon">🏢</span>
+                  </div>
+                  <div class="ind-cap-title-box">
+                    <div class="ind-cap-eyebrow">Production Readiness &amp; Market Value</div>
+                    <h4 class="card-section-title" id="indCapTitle">What You Are Capable of Doing in the Industry</h4>
+                    <p class="card-section-desc" id="indCapSummary">Based on your technical stack, architecture depth, and assessment performance, here is what you can deliver right now to software engineering teams:</p>
+                  </div>
+                </div>
+
+                <!-- Roles You Can Fulfill in Industry -->
+                <div class="ind-roles-row">
+                  <span class="ind-roles-label">💼 Roles You Can Fulfill:</span>
+                  <div class="ind-roles-badges" id="indCapRolesList">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+
+                <!-- What You Can Build & Deliver in Production -->
+                <div class="ind-deliverables-wrap">
+                  <h5 class="ind-subhead">🛠️ High-Impact Industry Systems You Can Build &amp; Scale:</h5>
+                  <div class="ind-deliverables-grid" id="indCapDeliverablesGrid">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+
+                <!-- Strategic Business Impact Box -->
+                <div class="ind-business-impact-box">
+                  <div class="impact-badge-row">
+                    <span class="impact-icon">💡</span>
+                    <strong class="impact-badge-title">Direct Enterprise &amp; Business Value</strong>
+                  </div>
+                  <p id="indCapBusinessImpact">You are capable of translating complex business requirements into maintainable, scalable software solutions—reducing infrastructure compute costs, minimizing system downtime, and accelerating product time-to-market for enterprise and startup teams.</p>
+                </div>
+              </div>
+
+              <!-- Gemini AI Bullet Rewrites (Google XYZ Formula) -->
+              <div class="rewrites-section-card">
+                <div class="rewrites-header">
+                  <div class="rewrites-title-wrap">
+                    <span class="sparkle-icon">✨</span>
+                    <div>
+                      <h4 class="card-section-title">Gemini AI Bullet Rewrites (Google XYZ Formula)</h4>
+                      <p class="card-section-desc">Transformed weak passive duties into quantified impact statements: <em>"Accomplished [X], as measured by [Y], by doing [Z]"</em>.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rewrites-list" id="checkerRewritesList">
+                  <!-- Dynamically populated rewrite items -->
+                </div>
+              </div>
+
+              <!-- Action Plan & Recommendations -->
+              <div class="action-plan-card">
+                <div class="plan-header">
+                  <span class="plan-icon">🚀</span>
+                  <h4 class="card-section-title">Strategic 3-Step Action Plan</h4>
+                </div>
+                <div class="plan-steps-grid" id="checkerActionPlanList">
+                  <!-- Dynamically populated steps -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       INTERACTIVE MODALS
+       ========================================================================= -->
+
+  <!-- Modal 1: Password Reset Modal -->
+  <div class="modal-backdrop hidden" id="forgotModal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="closeForgotModal" aria-label="Close modal">&times;</button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <h2 class="modal-title">Reset Password</h2>
+      <p class="modal-subtitle">Enter your registered email and we'll send a secure one-time verification link.</p>
+      
+      <form id="forgotPasswordForm" novalidate>
+        <div class="input-group">
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <input type="email" id="forgotEmail" placeholder="you@domain.com" required>
+          </div>
+          <span class="field-error" id="forgotEmailError"></span>
+        </div>
+        <button type="submit" class="submit-btn" id="forgotSubmitBtn">
+          <span>Send Recovery Link</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Edit Profile & Target Role Modal -->
+  <div class="modal-backdrop hidden" id="editProfileModal">
+    <div class="modal-dialog modal-lg">
+      <button type="button" class="modal-close-btn" id="closeEditProfileModal" aria-label="Close modal">&times;</button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+      </div>
+      <h2 class="modal-title">Edit Hacker Profile</h2>
+      <p class="modal-subtitle">Update your profile parameters, education, and target career role.</p>
+
+      <form id="editProfileForm">
+        <div class="input-group">
+          <label for="editFullName">Full Name</label>
+          <input type="text" id="editFullName" class="custom-input" value="Alex Morgan" required>
+        </div>
+
+        <div class="input-group">
+          <label for="editTargetRole">Target Career Role</label>
+          <select id="editTargetRole" class="custom-input">
+            <option value="AI Systems Architect" selected>AI Systems Architect</option>
+            <option value="Cloud Full-Stack Engineer">Cloud Full-Stack Engineer</option>
+            <option value="DevSecOps & Platform Engineer">DevSecOps & Platform Engineer</option>
+            <option value="Autonomous Agent Engineer">Autonomous Agent Engineer</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="editEducation">Education / University</label>
+          <input type="text" id="editEducation" class="custom-input" value="M.S. in Computer Science & Distributed Systems, Stanford University">
+        </div>
+
+        <div class="input-group">
+          <label for="editBio">Bio &amp; Hackathon Track</label>
+          <input type="text" id="editBio" class="custom-input" value="Full-Stack Architect & AI Systems Builder • Competing in CareerVista Autonomous Agents Track">
+        </div>
+
+        <div class="input-group">
+          <label for="editSkillsInput">Skills (comma separated)</label>
+          <input type="text" id="editSkillsInput" class="custom-input" value="Python, PyTorch, TypeScript, React, Next.js 15, Docker, PostgreSQL, System Design">
+        </div>
+
+        <div class="input-group">
+          <label for="editInterestsInput">Interests (comma separated)</label>
+          <input type="text" id="editInterestsInput" class="custom-input" value="Autonomous Agents, LLM Fine-Tuning, Low-Latency Systems, Zero-Knowledge Proofs">
+        </div>
+
+        <button type="submit" class="submit-btn" id="saveProfileBtn">
+          <span>Save Changes to Profile</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Submit Hackathon Project Modal -->
+  <div class="modal-backdrop hidden" id="submitProjectModal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="closeSubmitProjectModal" aria-label="Close modal">&times;</button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </div>
+      <h2 class="modal-title">Submit Hackathon Project</h2>
+      <p class="modal-subtitle">Register a new prototype for the CareerVista 2026 hackathon track.</p>
+
+      <form id="newProjectForm">
+        <div class="input-group">
+          <label for="projName">Project Name</label>
+          <input type="text" id="projName" class="custom-input" placeholder="e.g. CareerVista Neural Cache" required>
+        </div>
+
+        <div class="input-group">
+          <label for="projDesc">Brief Overview</label>
+          <textarea id="projDesc" class="custom-input" rows="3" placeholder="Describe the prototype architecture and problem solved..." required></textarea>
+        </div>
+
+        <div class="input-group">
+          <label for="projTags">Tech Stack Tags (comma separated)</label>
+          <input type="text" id="projTags" class="custom-input" placeholder="e.g. Python, FastStream, WebSockets" required>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>Submit Prototype to Leaderboard</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Study Reference Article Reader Modal -->
+  <div class="modal-backdrop hidden" id="studyArticleModal">
+    <div class="modal-dialog modal-xl">
+      <button type="button" class="modal-close-btn" id="closeStudyArticleModal" aria-label="Close modal">&times;</button>
+      <div class="article-reader-header">
+        <div class="article-badges-row">
+          <span class="badge-role" id="modalArticleDomain">AI & Autonomous Agents</span>
+          <span class="reading-time-pill" id="modalArticleReadTime">6 min read</span>
+        </div>
+        <h2 class="modal-title text-left" id="modalArticleTitle">Reference Study Article</h2>
+      </div>
+
+      <div class="article-takeaways-card">
+        <div class="takeaways-header">
+          <span class="takeaways-icon">💡</span>
+          <strong>Key Architectural Takeaways &amp; Concepts</strong>
+        </div>
+        <ul class="takeaways-list" id="modalArticleTakeaways">
+          <!-- Injected dynamically -->
+        </ul>
+      </div>
+
+      <div class="article-study-body" id="modalArticleContent">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="modal-footer-actions">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="dash-btn outline" id="modalArticleExternalLink">
+          <span>Official Documentation ↗</span>
+        </a>
+        <button type="button" class="dash-btn primary" id="modalReadyToAttendBtn">
+          <span>I Have Finished Reading — Confirm Articles →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Official Technical Certificate Modal -->
+  <div class="modal-backdrop hidden" id="certificateModal">
+    <div class="modal-dialog modal-xl cert-modal-dialog">
+      <button type="button" class="modal-close-btn" id="closeCertificateModal" aria-label="Close certificate">&times;</button>
+      
+      <!-- Luxury Gold Foil & Cyan Certificate Container -->
+      <div class="certificate-container" id="certificatePrintable">
+        <div class="cert-outer-border">
+          <div class="cert-inner-border">
+            <div class="cert-corner-ornament tl"></div>
+            <div class="cert-corner-ornament tr"></div>
+            <div class="cert-corner-ornament bl"></div>
+            <div class="cert-corner-ornament br"></div>
+
+            <div class="cert-header">
+              <div class="cert-badge-crest">
+                <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                  <polyline points="2 17 12 22 22 17"/>
+                  <polyline points="2 12 12 17 22 12"/>
+                </svg>
+              </div>
+              <h4 class="cert-board-title">CAREERVISTA GLOBAL TECHNICAL STANDARDS</h4>
+              <h2 class="cert-main-title">Certificate of Technical Proficiency</h2>
+              <div class="cert-divider-line"></div>
+            </div>
+
+            <div class="cert-body">
+              <p class="cert-certifies-text">THIS IS TO OFFICIALLY CERTIFY THAT</p>
+              <h1 class="cert-recipient-name" id="certModalRecipient">Alex Morgan</h1>
+              <p class="cert-description-text">has successfully passed the comprehensive 10-question technical competency examination with demonstrated mastery in</p>
+              <h3 class="cert-domain-name" id="certModalDomain">AI &amp; Autonomous Agents</h3>
+
+              <div class="cert-score-highlight">
+                <div class="cert-score-pill">
+                  <span class="cert-score-num" id="certModalScore">90%</span>
+                  <span class="cert-score-tag">Verified Score Percentage</span>
+                </div>
+                <div class="cert-grade-pill" id="certModalGrade">Honor Roll (A+)</div>
+              </div>
+            </div>
+
+            <div class="cert-footer">
+              <div class="cert-sign-col">
+                <div class="cert-signature-line">
+                  <span class="cert-sig-script">Dr. Evelyn Vance</span>
+                </div>
+                <div class="cert-sign-name">Dr. Evelyn Vance, Ph.D.</div>
+                <div class="cert-sign-title">Chief Certification Architect</div>
+              </div>
+
+              <div class="cert-seal-col">
+                <div class="cert-gold-seal">
+                  <div class="seal-inner-circle">
+                    <span>OFFICIAL</span>
+                    <strong>SEAL</strong>
+                    <span>2026</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cert-sign-col right-sign">
+                <div class="cert-meta-item">
+                  <span class="cert-meta-label">Credential Verification ID:</span>
+                  <code class="cert-hash" id="certModalVerificationId">VRF-NX-90-A882</code>
+                </div>
+                <div class="cert-meta-item">
+                  <span class="cert-meta-label">Date Issued:</span>
+                  <span class="cert-date" id="certModalDate">October 1, 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-actions">
+        <button type="button" class="dash-btn outline" id="closeCertModalBtn">
+          <span>Close Preview</span>
+        </button>
+        <button type="button" class="dash-btn primary" id="printCertificateBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Print / Download Certificate PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Gemini API Key Modal -->
+  <div class="modal-backdrop hidden" id="geminiKeyModal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close-btn" id="closeGeminiKeyModal" aria-label="Close modal">&times;</button>
+      <div class="modal-icon" style="background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); color: #c084fc; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; width: 48px; height: 48px; border-radius: 12px; margin: 0 auto 1rem;">
+        ✨
+      </div>
+      <h2 class="modal-title">Google Gemini AI Settings</h2>
+      <p class="modal-subtitle">Connect your Google Gemini API key to enable live backend searches and AI mentor responses directly in the chat box.</p>
+
+      <form id="geminiKeyForm" novalidate>
+        <div class="input-group">
+          <div class="label-row">
+            <label for="geminiApiKeyInput">Gemini API Key</label>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="field-hint" style="color: #38bdf8; text-decoration: underline;">Get free key ↗</a>
+          </div>
+          <div class="input-wrapper">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="geminiApiKeyInput" class="custom-input" placeholder="AIzaSy..." autocomplete="off">
+            <button type="button" class="password-toggle-btn" id="toggleGeminiKeyVis" aria-label="Show key">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <span class="field-hint" id="geminiKeyStatusHint">Your key is stored securely in your browser and used by CareerVista backend to query Gemini.</span>
+        </div>
+
+        <div class="modal-actions-row" style="display:flex; gap:0.75rem; margin-top:1.25rem;">
+          <button type="submit" class="submit-btn" id="saveGeminiKeyBtn" style="flex:1;">
+            <span>💾 Save &amp; Test Key</span>
+          </button>
+          <button type="button" class="dash-btn outline" id="removeGeminiKeyBtn" style="padding:0.75rem 1rem;">
+            <span>Remove</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
